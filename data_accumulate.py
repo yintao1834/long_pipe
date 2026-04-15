@@ -13,3 +13,4 @@ df = pd.read_csv(data_path, encoding = result['encoding'], usecols=['Distance (m
                  index_col=['Distance (m)'])
 df.columns = ['strain']
 print(df)
+print('vodatre')
