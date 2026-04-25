@@ -36,7 +36,9 @@ fig = plt.figure(figsize=(20,10))
 for i in range(1,13):
     df = pd.read_csv(FILE_DIR/f'output{2.5*i}-{2.5*i}.csv', index_col=0)
     signal = df.copy()
-    mask = signal.index < 0.6
+    # mask1 = signal.index < 0.07
+    # mask2 = signal.index < 0.07
+    mask
 
     # 这个会改变mask范围内的所有点，但我们其实只需要处理异常点
     # signal.loc[mask, 'ch1'] = medfilt(signal.loc[mask, 'ch1'], kernel_size=7)
@@ -49,12 +51,18 @@ for i in range(1,13):
     
     # use hampel_filter
     # 用完这个发现还是不管用，
-    signal.loc[mask, 'ch1'] = hampel_filter(signal.loc[mask, 'ch1'])
-    signal.loc[mask, 'ch2'] = hampel_filter(signal.loc[mask, 'ch2'])
-    signal.loc[mask, 'ch3'] = hampel_filter(signal.loc[mask, 'ch3'])
-    signal.loc[mask, 'ch4'] = hampel_filter(signal.loc[mask, 'ch4'])
+    # signal.loc[mask, 'ch1'] = hampel_filter(signal.loc[mask, 'ch1'])
+    # signal.loc[mask, 'ch2'] = hampel_filter(signal.loc[mask, 'ch2'])
+    # signal.loc[mask, 'ch3'] = hampel_filter(signal.loc[mask, 'ch3'])
+    # signal.loc[mask, 'ch4'] = hampel_filter(signal.loc[mask, 'ch4'])
 
-    signal = pd.DataFrame(signal, index = signal.index, columns= signal.columns)
+    # 直接设置为0
+    signal.loc[mask, 'ch1'] = 0
+    signal.loc[mask, 'ch2'] = 0
+    signal.loc[mask, 'ch3'] = 0
+    signal.loc[mask, 'ch4'] = 0
+
+    # signal = pd.DataFrame(signal, index = signal.index, columns= signal.columns)
     signal.to_csv(FILE_DIR/f'processed{2.5*i}-{2.5*i}.csv')
 
     ax = fig.add_subplot(3,4,i)
